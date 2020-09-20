@@ -8,7 +8,15 @@ function university_files() {
     wp_enqueue_script('university-js', get_theme_file_uri('/js/scripts-bundled.js'), NULL, microtime(), true); 
     wp_enqueue_style('university_main_styles', get_stylesheet_uri(), NULL, microtime());
 }
-add_action('wp_enqueue_scripts', 'university_files')
+
+add_action('wp_enqueue_scripts', 'university_files');
+
+
+function university_features() {
+    add_theme_support('title-tag');
+}
+
+add_action('after_setup_theme', 'university_features');
 
 ?>
 
