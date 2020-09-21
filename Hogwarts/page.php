@@ -18,17 +18,33 @@ get_header();
  $theParent = wp_get_post_parent_id(get_the_ID());
  if($theParent) { ?>
    <div class="metabox metabox--position-up metabox--with-home-link">
-   <p><a class="metabox__blog-home-link" href="<?php get_permalink($theParent); ?>"><i class="fa fa-home" aria-hidden="true"></i> Back to <?php echo get_the_title($theParent); ?></a> <span class="metabox__main"><?php the_title(); ?></span></p>
+   <p><a class="metabox__blog-home-link" href="<?php echo get_permalink($theParent); ?>"><i class="fa fa-home" aria-hidden="true"></i> Back to <?php echo get_the_title($theParent); ?></a> <span class="metabox__main"><?php the_title(); ?></span></p>
  </div>
 <?php } ?>
     
+   <?php 
+   $testArray = get_pages(array(
+     'child_of' => get_the_ID()
+   ));
+   if($theParent or $testArray) { ?>
     <div class="page-links">
-      <h2 class="page-links__title"><a href="#">About Us</a></h2>
+      <h2 class="page-links__title"><a href="<?php echo get_permalink($theParent); ?>"><?php echo get_the_title($theParent);?></a></h2>
       <ul class="min-list">
-        <li class="current_page_item"><a href="#">Our History</a></li>
-        <li><a href="#">Our Goals</a></li>
+      <?php if($theParent) {
+        $findChildrenOf = $theParent;
+      }
+      else {
+        $findChildrenOf = get_the_ID();
+      }
+      wp_list_pages(array(
+        'title_li' => NULL,
+        'child_of' => $findChildrenOf,
+        'sort_column' => 'menu_order' 
+      ));
+      ?>
       </ul>
     </div>
+    <?php } ?>
 
     <div class="generic-content">
 	<?php the_content(); ?>
@@ -52,13 +68,13 @@ get_header();
       <ul class="professor-cards">
        <li class="professor-card__list-item">
        <a href="#" class="professor-card">
-           <img class="professor-card__image" src="images/barksalot.jpg">
+           <img class="professor-card__image" src="<?php bloginfo('template_url'); ?>/images/barksalot.jpg">
            <span class="professor-card__name">Dr. Barksalot</span>
          </a>
        </li>
        <li class="professor-card__list-item">
        <a href="#" class="professor-card">
-           <img class="professor-card__image" src="images/meowsalot.jpg">
+           <img class="professor-card__image" src="<?php bloginfo('template_url'); ?>/images/meowsalot.jpg">
            <span class="professor-card__name">Dr. Meowsalot</span>
          </a>
        </li>
